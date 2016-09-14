@@ -1,27 +1,30 @@
 {
-  "name": "weatherSite",
+  "name": "weather-site",
   "version": "1.0.0",
-  "description": "description",
-  "main": "Grunt.js",
-  "dependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-less": "^0.11.4",
-    "grunt-contrib-watch": "^0.6.1"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-less": "^0.11.4",
-    "grunt-contrib-watch": "~0.6.1"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ckeisato/weatherSite.git"
+    "url": "git+https://github.com/ckeisato/weatherSite.git"
   },
-  "author": "",
+  "author": "Kei Sato",
   "license": "ISC",
-
-  "homepage": "https://github.io/ckeisato/weatherSite"
+  "bugs": {
+    "url": "https://github.com/ckeisato/weatherSite/issues"
+  },
+  "homepage": "https://github.com/ckeisato/weatherSite#readme",
+  "devDependencies": {
+    "browser-sync": "^2.15.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
+    "sass": "^0.5.0"
+  }
 }
