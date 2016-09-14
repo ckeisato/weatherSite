@@ -8,7 +8,8 @@ var testData =
   },
   weather: [
     {
-      id: 800,
+      id: 320,
+      // id: 800,
       main: "Clear",
       description: "clear sky",
       icon: "01n"
@@ -48,12 +49,15 @@ var indexPage = {
   apiQuery: 'api.openweathermap.org/data/2.5/weather?',
   apiArgs: '&units=metric',
 
+
 	init: function(){
     console.log("hello");
+    // var item = this.getWeatherData('40.727944', '-73.951844');
+    this.weatherContainer = document.getElementById('weatherBox');
 
     // For testing
     this.data = testData;
-    // var item = this.getWeatherData('40.727944', '-73.951844');
+    this.initPercipitation(testData.weather[0].id);
   },
 
   getWeatherData: function(lat, lon) {
@@ -62,6 +66,22 @@ var indexPage = {
     console.log(apiCall);
 
     var xhr = new XMLHttpRequest();
+  },
+
+  initPercipitation: function(weatherCode) {
+    var numCircles = 100;
+    if ((weatherCode > 300) && (weatherCode < 400) ) {
+      console.log(weatherCode);
+
+      for (var i = 0; i < numCircles; i++) {
+        var circle = document.createElement('circle');
+        this.weatherContainer.appendChild(circle);
+        var circles = d3.selectAll("circle");
+        circles.style("fill", "steelblue");
+        circles.attr("r", 10);
+      }
+
+    }
   }
 }
 
