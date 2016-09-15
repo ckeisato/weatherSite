@@ -54,6 +54,7 @@ var indexPage = {
     console.log("hello");
     // var item = this.getWeatherData('40.727944', '-73.951844');
     this.weatherContainer = document.getElementById('weatherBox');
+    this.svgContainer = d3.select('#weatherBox').append("svg").attr("width", 500).attr("height", 500);
 
     // For testing
     this.data = testData;
@@ -70,20 +71,26 @@ var indexPage = {
 
   initPercipitation: function(weatherCode) {
     var numCircles = 100;
-    if ((weatherCode > 300) && (weatherCode < 400) ) {
-      console.log(weatherCode);
+
+    if ((weatherCode > 300) && (weatherCode < 400)) {
 
       for (var i = 0; i < numCircles; i++) {
-        var circle = document.createElement('circle');
-        this.weatherContainer.appendChild(circle);
-        var circles = d3.selectAll("circle");
-        circles.style("fill", "steelblue");
-        circles.attr("r", 10);
+        var circle = svgContainer.append("circle").attr("r", 20);
+        this.svgContainer.appendChild(circle).attr("r", 20);
       }
-
+      var circles = d3.selectAll("circle");
+      circles.style("fill", "steelblue");
+      // circles.transition().duration(500).attr("cy", 100)
     }
   }
 }
+
+// d3.select("#circ").transition().duration(500)
+//     .attr("cx", Math.random() * 200) // change this to random 2px
+//   .attr("cy", Math.random() * 200) // change this to random 2px
+//     .each("end", function () {
+//     myTransf();
+// });
 
 
 indexPage.init();

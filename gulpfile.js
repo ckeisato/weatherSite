@@ -59,7 +59,7 @@ gulp.task('scripts', function(){
 
 	// index page
 	gulp.src(paths.assets + '/*.js')
-	  .pipe(rename('index.min.js'))
+	  // .pipe(rename('index.min.js'))
 		// .pipe(uglify())
 		.pipe(gulp.dest('./public/'));
 });
