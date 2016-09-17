@@ -28,9 +28,9 @@ gulp.task('serve', function(){
 
 	gulp.watch(paths.assets + '/*.html' , ['pages']);
 	gulp.watch(paths.assets + '/*.scss',['styles']);
-	gulp.watch(paths.assets + '/*.js',['scripts']);
+	gulp.watch(paths.assets + '/js/*.js',['scripts']);
 
-  gulp.watch('public/*').on('change', browserSync.reload);
+  gulp.watch('public/*/*').on('change', browserSync.reload);
 });
 
 
@@ -58,10 +58,10 @@ gulp.task('data', function(){
 gulp.task('scripts', function(){
 
 	// index page
-	gulp.src(paths.assets + '/*.js')
+	gulp.src(paths.assets + '/js/*.js')
 	  // .pipe(rename('index.min.js'))
 		// .pipe(uglify())
-		.pipe(gulp.dest('./public/'));
+		.pipe(gulp.dest('./public/js/'));
 });
 
 
