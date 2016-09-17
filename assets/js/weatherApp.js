@@ -1,6 +1,6 @@
 // Precipitation module
 // Gets the number of "preciptation" and type??
-
+// Get better way of getting location for UI
 var testData =
 {
   coord: {
