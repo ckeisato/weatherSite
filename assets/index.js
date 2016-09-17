@@ -1,4 +1,7 @@
 // separate out weather sections?
+// TODO:
+//  separate out preciptation function
+//  separate out cloud rendering function
 
 var testData =
 {
@@ -9,7 +12,6 @@ var testData =
   weather: [
     {
       id: 320,
-      // id: 800,
       main: "Clear",
       description: "clear sky",
       icon: "01n"
@@ -49,18 +51,18 @@ var indexPage = {
   apiQuery: 'api.openweathermap.org/data/2.5/weather?',
   apiArgs: '&units=metric',
 
-
+  // Get main DOM objects and set weather object
 	init: function(){
     console.log("hello");
     // var item = this.getWeatherData('40.727944', '-73.951844');
-    this.weatherContainer = document.getElementById('weatherBox');
-    this.svgContainer = d3.select('#weatherBox').append("svg").attr("width", 500).attr("height", 500);
+    this.svgContainer = d3.select('#weatherBox');
 
     // For testing
     this.data = testData;
-    this.initPercipitation(testData.weather[0].id);
+    this.setPercipitation(testData.weather[0].id);
   },
 
+  // Make API call to get weather data
   getWeatherData: function(lat, lon) {
     var latLon = 'lat=' + lat + '&lon=' + lon;
     var apiCall = this.apiQuery + latLon + this.apiKey + this.apiArgs;
@@ -69,28 +71,77 @@ var indexPage = {
     var xhr = new XMLHttpRequest();
   },
 
-  initPercipitation: function(weatherCode) {
-    var numCircles = 100;
+  // Set precipitation variables
+  setPercipitation: function(weatherCode) {
+    var numPrecip = 100;
 
-    if ((weatherCode > 300) && (weatherCode < 400)) {
 
-      for (var i = 0; i < numCircles; i++) {
-        var circle = svgContainer.append("circle").attr("r", 20);
-        this.svgContainer.appendChild(circle).attr("r", 20);
-      }
-      var circles = d3.selectAll("circle");
-      circles.style("fill", "steelblue");
-      // circles.transition().duration(500).attr("cy", 100)
-    }
+
+    this.initPercipitation(numPrecip);
+  },
+
+  initPercipitation: function(numPrecip) {
+    this.circle = this.svgContainer.selectAll("circle")
+      .data(d3.range(numPrecip).map(function(datum,interval) {
+        return {
+          x: interval*20,
+          y: 0,
+          dx: 1 * (Math.random()+1),
+          dy: -4 * (Math.random()+1),
+          mu: Math.random()*2
+        };
+      }))
+      .enter().append("svg:circle")
+        .attr("r", 2)
+        .attr("fill","white")
+        .attr("opacity",".8");
+
+    this.precipTimer();
+  },
+
+  precipTimer: function() {
+    // var text = this.svgContainer.append("svg:text")
+    //   .attr("x", 20)
+    //   .attr("y", 20);
+
+    var w = 960;
+    var h = 500;
+
+    var that = this;
+    var start = Date.now();
+    var frames = 0;
+
+    return d3.timer(function() {
+      // Update the FPS meter.
+      var now = Date.now();
+      var duration = now - start;
+      // text.text(~~(++frames * 1000 / duration));
+      if (duration >= 1000) frames = 0, start = now;
+
+      // Update the circle positions.
+      that.circle
+        .attr("cx", function(d) {
+          d.x += d.dx;
+          if (d.x > w) {
+            d.x -= w;
+          }
+          else if (d.x < 0) {
+            d.x += w;
+          }
+          return d.x;
+        })
+        .attr("cy", function(d) {
+          d.y -= d.dy;
+          if (d.y > h) {
+            d.y -= h;
+          }
+          else if (d.y < 0) {
+             d.y += h;
+           }
+           return d.y;
+         });
+    });
   }
 }
-
-// d3.select("#circ").transition().duration(500)
-//     .attr("cx", Math.random() * 200) // change this to random 2px
-//   .attr("cy", Math.random() * 200) // change this to random 2px
-//     .each("end", function () {
-//     myTransf();
-// });
-
 
 indexPage.init();
