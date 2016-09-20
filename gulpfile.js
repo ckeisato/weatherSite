@@ -30,7 +30,7 @@ gulp.task('serve', function(){
 	gulp.watch(paths.assets + '/*.scss',['styles']);
 	gulp.watch(paths.assets + '/js/*.js',['scripts']);
 
-  gulp.watch(['public/**/*', 'public/*']).on('change', browserSync.reload);
+  gulp.watch(['public/**/*']).on('change', browserSync.reload);
 });
 
 
