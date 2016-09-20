@@ -7,7 +7,7 @@ define(function() {
 
     initPercipitation: function(numPrecip) {
       this.svgContainer = d3.select('#weatherBox');
-      this.circle = this.svgContainer.selectAll("circle")
+      this.circle = this.svgContainer.selectAll("ellipse")
         .data(d3.range(numPrecip).map(function(datum,interval) {
           return {
             x: interval*20,
@@ -17,18 +17,16 @@ define(function() {
             mu: Math.random()*2
           };
         }))
-        .enter().append("svg:circle")
-          .attr("r", 2)
-          .attr("fill","white")
+        .enter().append("svg:ellipse")
+          .attr("ry", 2)
+          .attr("rx", 1)
+          .attr("fill","blue")
           .attr("opacity",".8");
 
       this.precipTimer();
     },
 
     precipTimer: function() {
-      // var text = this.svgContainer.append("svg:text")
-      //   .attr("x", 20)
-      //   .attr("y", 20);
 
       var w = 960;
       var h = 500;

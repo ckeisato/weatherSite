@@ -44,7 +44,7 @@ var testData =
   cod: 200
 }
 
-define(['precipitation'], function(preciptation) {
+define(['precipitation', 'temperature'], function(preciptation, temperature) {
   return {
 
     apiKey: '&appid=4f16dd1b43b18739eed18f43379a5287',
@@ -55,11 +55,12 @@ define(['precipitation'], function(preciptation) {
   	init: function(){
       console.log("hello");
       // var item = this.getWeatherData('40.727944', '-73.951844');
-      this.svgContainer = d3.select('#weatherBox');
+      this.weatherBox = d3.select('#weatherBox');
 
       // For testing
       this.data = testData;
-      preciptation.initPercipitation(testData.weather[0].id);
+      temperature.initTemperature(testData.main.temp, this);
+      // preciptation.initPercipitation(testData.weather[0].id);
     },
 
     // Make API call to get weather data?????
