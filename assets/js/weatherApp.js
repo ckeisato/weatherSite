@@ -48,7 +48,7 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
   return {
 
     apiKey: '&appid=4f16dd1b43b18739eed18f43379a5287',
-    apiQuery: 'api.openweathermap.org/data/2.5/weather?',
+    apiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
     apiArgs: '&units=metric',
 
     // Get main DOM objects and set weather object
@@ -71,6 +71,22 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
       console.log(apiCall);
 
       var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', apiCall);
+      xhr.send(null);
+
+      xhr.onreadystatechange = function () {
+        var DONE = 4; // readyState 4 means the request is done.
+        var OK = 200; // status 200 is a successful return.
+        if (xhr.readyState === DONE) {
+          if (xhr.status === OK) {
+            console.log(xhr.responseText); // 'This is the returned text.'
+          } 
+          else {
+            console.log('Error: ' + xhr.status); // An error occurred during the request.
+          }
+        }
+      };
     },
 
     setText: function(weatherData) {
@@ -99,6 +115,7 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
         var lat = place.geometry.location.lat();
         var long = place.geometry.location.lng()
         that.getWeatherData(lat, long);
+        // clean out temperature/precipitation stuff...
       });
     }
   }
