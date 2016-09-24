@@ -44,7 +44,7 @@ var testData =
   cod: 200
 }
 
-define(['precipitation', 'temperature'], function(preciptation, temperature) {
+define(['precipitation', 'temperature', 'location'], function(preciptation, temperature, location) {
   return {
 
     apiKey: '&appid=4f16dd1b43b18739eed18f43379a5287',
