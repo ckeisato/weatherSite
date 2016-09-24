@@ -13,14 +13,13 @@ define(function() {
             x: interval*20,
             y: 0,
             dx: 1 * (Math.random()+1),
-            dy: -4 * (Math.random()+1),
-            mu: Math.random()*2
+            dy: -3 * (Math.random()+1)
           };
         }))
         .enter().append("svg:ellipse")
           .attr("ry", 2)
           .attr("rx", 1)
-          .attr("fill","blue")
+          .attr("fill","white")
           .attr("opacity",".8");
 
       this.precipTimer();
@@ -39,7 +38,6 @@ define(function() {
         // Update the FPS meter.
         var now = Date.now();
         var duration = now - start;
-        // text.text(~~(++frames * 1000 / duration));
         if (duration >= 1000) frames = 0, start = now;
 
         // Update the circle positions.

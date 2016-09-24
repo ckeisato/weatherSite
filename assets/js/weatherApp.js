@@ -53,14 +53,14 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
 
     // Get main DOM objects and set weather object
   	init: function(){
-      console.log("hello");
       // var item = this.getWeatherData('40.727944', '-73.951844');
       this.weatherBox = d3.select('#weatherBox');
 
       // For testing
       this.data = testData;
       temperature.initTemperature(testData.main.temp, this);
-      // preciptation.initPercipitation(testData.weather[0].id);
+      preciptation.initPercipitation(testData.weather[0].id);
+      this.setText(testData);
     },
 
     // Make API call to get weather data?????
@@ -70,6 +70,16 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
       console.log(apiCall);
 
       var xhr = new XMLHttpRequest();
+    },
+
+    setText: function(weatherData) {
+      var location = weatherData.name,
+          conditions = weatherData.weather[0].description,
+          temperature = weatherData.main.temp;
+      
+      document.getElementById("location").innerHTML = location;
+      document.getElementById("conditions").innerHTML = conditions;
+      document.getElementById("temperature").innerHTML = temperature + "&deg;";
     }
 
   }
