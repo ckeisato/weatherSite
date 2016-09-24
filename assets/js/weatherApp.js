@@ -44,7 +44,7 @@ var testData =
   cod: 200
 }
 
-define(['precipitation', 'temperature', 'location'], function(preciptation, temperature, location) {
+define(['precipitation', 'temperature'], function(preciptation, temperature) {
   return {
 
     apiKey: '&appid=4f16dd1b43b18739eed18f43379a5287',
@@ -60,6 +60,7 @@ define(['precipitation', 'temperature', 'location'], function(preciptation, temp
       this.data = testData;
       temperature.initTemperature(testData.main.temp, this);
       preciptation.initPercipitation(testData.weather[0].id);
+      this.initLocation();
       this.setText(testData);
     },
 
@@ -80,7 +81,25 @@ define(['precipitation', 'temperature', 'location'], function(preciptation, temp
       document.getElementById("location").innerHTML = location;
       document.getElementById("conditions").innerHTML = conditions;
       document.getElementById("temperature").innerHTML = temperature + "&deg;";
-    }
+    },
 
+    initLocation: function() {
+      var input =  document.getElementById('input-location');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      var that = this;
+
+      autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+
+        if (!place.geometry) {
+          window.alert("Autocomplete's returned place contains no geometry");
+          return;
+        }
+
+        var lat = place.geometry.location.lat();
+        var long = place.geometry.location.lng()
+        that.getWeatherData(lat, long);
+      });
+    }
   }
 });
