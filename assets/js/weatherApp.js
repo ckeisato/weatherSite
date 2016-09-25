@@ -53,13 +53,12 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
 
     // Get main DOM objects and set weather object
   	init: function(){
-      // var item = this.getWeatherData('40.727944', '-73.951844');
       this.weatherBox = d3.select('#weatherBox');
 
       // For testing
       this.data = testData;
-      temperature.initTemperature(testData.main.temp, this);
-      preciptation.initPercipitation(testData.weather[0].id);
+      this.temperature = temperature;
+      this.preciptation = preciptation;
       this.initLocation();
       this.setText(testData);
     },
@@ -68,19 +67,19 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
     getWeatherData: function(lat, lon) {
       var latLon = 'lat=' + lat + '&lon=' + lon;
       var apiCall = this.apiQuery + latLon + this.apiKey + this.apiArgs;
-      console.log(apiCall);
-
       var xhr = new XMLHttpRequest();
 
       xhr.open('GET', apiCall);
       xhr.send(null);
+
+      var that = this;
 
       xhr.onreadystatechange = function () {
         var DONE = 4; // readyState 4 means the request is done.
         var OK = 200; // status 200 is a successful return.
         if (xhr.readyState === DONE) {
           if (xhr.status === OK) {
-            console.log(xhr.responseText); // 'This is the returned text.'
+            that.initNewWeather(JSON.parse(xhr.responseText));            
           } 
           else {
             console.log('Error: ' + xhr.status); // An error occurred during the request.
@@ -99,6 +98,15 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
       document.getElementById("temperature").innerHTML = temperature + "&deg;";
     },
 
+    initNewWeather: function(weatherData) {
+      document.getElementById('weatherBox').innerHTML = '';
+      this.weatherData = weatherData;
+      this.temperature.initTemperature(weatherData.main.temp, this);
+      this.preciptation.initPercipitation(testData.weather[0].id);
+      this.setText(this.weatherData);
+
+    },
+
     initLocation: function() {
       var input =  document.getElementById('input-location');
       var autocomplete = new google.maps.places.Autocomplete(input);
@@ -112,10 +120,7 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
           return;
         }
 
-        var lat = place.geometry.location.lat();
-        var long = place.geometry.location.lng()
-        that.getWeatherData(lat, long);
-        // clean out temperature/precipitation stuff...
+        that.getWeatherData(place.geometry.location.lat(), place.geometry.location.lng());
       });
     }
   }

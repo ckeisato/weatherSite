@@ -1,5 +1,4 @@
 // Precipitation module
-// Gets the number of "preciptation" and type??
 
 define(function() {
 
