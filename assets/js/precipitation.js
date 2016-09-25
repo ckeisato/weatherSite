@@ -63,7 +63,7 @@ define(function() {
         .enter().append("svg:ellipse")
           .attr("ry", that.ry)
           .attr("rx", that.rx)
-          .attr("fill","black")
+          .attr("fill","white")
           .attr("opacity",".8");
     },
 
