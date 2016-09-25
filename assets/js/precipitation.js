@@ -1,27 +1,70 @@
 // Precipitation module
-
+// weather conditions http://openweathermap.org/weather-conditions
 define(function() {
 
   return {
 
-    initPercipitation: function(numPrecip) {
-      this.svgContainer = d3.select('#weatherBox');
+    initPercipitation: function(weatherCode, parent) {
+      this.parent = parent;
+      this.svgContainer = this.parent.weatherBox;
+
+      if(this.setPrecip(weatherCode)) {
+        this.attachPrecip(100);
+        this.precipTimer();
+      }
+    },
+
+    setPrecip: function(weatherCode) {
+      switch (true) {
+        case ([200, 210, 230, 231, 300, 310, 311, 500, 520].indexOf(weatherCode) >= 0): // light rain
+          this.numPrecip = 200;
+          this.rx = 1;
+          this.ry = 2;
+          this.dy = -3;
+          return true;
+          break;
+        case ([201, 211, 221, 302, 313, 321, 501, 521].indexOf(weatherCode) >= 0):  // medium rain?
+          this.numPrecip = 400;
+          this.rx = 1;
+          this.ry = 2.5;
+          this.dy = -5;
+          return true;
+          break;
+        case ([202, 212, 231, 232, 312, 314, 502, 503, 504, 511, 522, 531].indexOf(weatherCode) >= 0):  // heavy rain 
+          this.numPrecip = 500;
+          this.rx = 1.5;
+          this.ry = 3;
+          this.dy = -7;
+          return true;
+          break;
+        case (weatherCode < 600):
+          this.numPrecip = 200;
+          this.rx = 1;
+          this.ry = 2;
+          this.dy = -2;
+          return true;
+        default:
+          return false;
+          break;
+      }
+    },
+
+    attachPrecip: function() {
+      var that = this;
       this.circle = this.svgContainer.selectAll("ellipse")
-        .data(d3.range(numPrecip).map(function(datum,interval) {
+        .data(d3.range(that.numPrecip).map(function(datum,interval) {
           return {
             x: interval*20,
             y: 0,
             dx: 1 * (Math.random()+1),
-            dy: -3 * (Math.random()+1)
+            dy: that.dy * (Math.random()+1)
           };
         }))
         .enter().append("svg:ellipse")
-          .attr("ry", 2)
-          .attr("rx", 1)
-          .attr("fill","white")
+          .attr("ry", that.ry)
+          .attr("rx", that.rx)
+          .attr("fill","black")
           .attr("opacity",".8");
-
-      this.precipTimer();
     },
 
     precipTimer: function() {

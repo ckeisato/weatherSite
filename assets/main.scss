@@ -12,6 +12,8 @@ h1 {
   height: 500px;
   width: 960px;
   position: absolute;
+  left: 0;
+  right: 0;
   margin: 0 auto;
   display: block;
 }
@@ -31,6 +33,8 @@ h1 {
 
 .input-container {
   padding: 20px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .input-location {
