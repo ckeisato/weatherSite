@@ -44,10 +44,9 @@
 //   cod: 200
 // }
 
-define(['precipitation', 'temperature'], function(preciptation, temperature) {
+define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, temperature, apiKeys) {
   return {
 
-    apiKey: '&appid=4f16dd1b43b18739eed18f43379a5287',
     apiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
     apiArgs: '&units=metric',
 
@@ -62,7 +61,7 @@ define(['precipitation', 'temperature'], function(preciptation, temperature) {
     // Make API call to get weather data?????
     getWeatherData: function(lat, lon) {
       var latLon = 'lat=' + lat + '&lon=' + lon;
-      var apiCall = this.apiQuery + latLon + this.apiKey + this.apiArgs;
+      var apiCall = this.apiQuery + latLon + apiKeys.openWeather + this.apiArgs;
       var xhr = new XMLHttpRequest();
 
       xhr.open('GET', apiCall);
