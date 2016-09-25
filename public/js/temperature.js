@@ -19,7 +19,7 @@ define(function() {
     x2: "0%",
     y2: "90%",
 
-    initTemperature: function(mainTemperature, parent) {
+    initTemperature: function(temperature, parent) {
 
       this.parent = parent;
       this.defs = parent.weatherBox.append("defs");
@@ -30,8 +30,7 @@ define(function() {
         .attr("x2", this.x2)
         .attr("y2", this.y2);
 
-
-      this.setLinearGradientColors(25);
+      this.setLinearGradientColors(temperature);
       this.setLinearGradient();
       this.fillWeatherBox();
     },
