@@ -47,21 +47,23 @@
 define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, temperature, apiKeys) {
   return {
 
-    apiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
-    apiArgs: '&units=metric',
+    openWeatherApiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
+    openWeatherApiArgs: '&units=metric',
 
     // Get main DOM objects and set weather object
   	init: function(){
       this.weatherBox = d3.select('#weatherBox');
       this.temperature = temperature;
       this.preciptation = preciptation;
-      this.initLocation();
+      this.apiKeys = apiKeys;
+
+      this.getGooglePlacesScript();
     },
 
     // Make API call to get weather data?????
     getWeatherData: function(lat, lon) {
       var latLon = 'lat=' + lat + '&lon=' + lon;
-      var apiCall = this.apiQuery + latLon + apiKeys.openWeather + this.apiArgs;
+      var apiCall = this.openWeatherApiQuery + latLon + this.apiKeys.openWeather + this.openWeatherApiArgs;
       var xhr = new XMLHttpRequest();
 
       xhr.open('GET', apiCall);
@@ -102,10 +104,22 @@ define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, tempe
       this.setText(this.weatherData);
     },
 
-    initLocation: function() {
-      var input =  document.getElementById('input-location');
-      var autocomplete = new google.maps.places.Autocomplete(input);
+    getGooglePlacesScript: function() {
+      var googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=" + this.apiKeys.googlePlaces + "&libraries=places";
+      var scriptTag = document.getElementById('google-maps-script');
+
       var that = this;
+      scriptTag.addEventListener("load", function(event) {
+        that.initLocation();
+      });
+
+      scriptTag.setAttribute('src', googleMapsUrl);
+    },
+
+    initLocation: function() {
+      var input =  document.getElementById('input-location'),
+          autocomplete = new google.maps.places.Autocomplete(input),
+          that = this;
 
       autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
