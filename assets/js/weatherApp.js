@@ -41,7 +41,7 @@
 //   cod: 200
 // }
 
-define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, temperature, apiKeys) {
+define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(preciptation, temperature, apiKeys, debounce) {
   return {
 
     openWeatherApiQuery: 'http://api.openweathermap.org/data/2.5/weather?',

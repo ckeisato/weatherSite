@@ -1,17 +1,27 @@
 // Precipitation module
 // weather conditions http://openweathermap.org/weather-conditions
-define(function() {
+
+define(['debounce'], function(debounce) {
 
   return {
+    width: 0,
+    height: 0,
 
     initPercipitation: function(weatherCode, parent) {
       this.parent = parent;
       this.svgContainer = this.parent.weatherBox;
+      var that = this;
 
       if(this.setPrecip(weatherCode)) {
         this.attachPrecip(100);
         this.precipTimer();
       }
+
+      var updateDimensionsDebounce = debounce.debounce(function() {
+        that.updateDimensions();
+      }, 200);
+
+      window.addEventListener("resize", updateDimensionsDebounce);
     },
 
     setPrecip: function(weatherCode) {
@@ -67,14 +77,17 @@ define(function() {
           .attr("opacity",".8");
     },
 
+    updateDimensions: function() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
+
     precipTimer: function() {
+      this.updateDimensions();
 
-      var w = 960;
-      var h = 500;
-
-      var that = this;
-      var start = Date.now();
-      var frames = 0;
+      var that = this, 
+          start = Date.now(),
+          frames = 0;
 
       return d3.timer(function() {
         // Update the FPS meter.
@@ -86,21 +99,21 @@ define(function() {
         that.circle
           .attr("cx", function(d) {
             d.x += d.dx;
-            if (d.x > w) {
-              d.x -= w;
+            if (d.x > that.width) {
+              d.x -= that.width;
             }
             else if (d.x < 0) {
-              d.x += w;
+              d.x += that.width;
             }
             return d.x;
           })
           .attr("cy", function(d) {
             d.y -= d.dy;
-            if (d.y > h) {
-              d.y -= h;
+            if (d.y > that.height) {
+              d.y -= that.height;
             }
             else if (d.y < 0) {
-               d.y += h;
+               d.y += that.height;
              }
              return d.y;
            });

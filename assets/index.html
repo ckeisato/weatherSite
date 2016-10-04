@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kei Sato</title>
+  <title>Weather Site</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="main.css">
 </head>
   <body class="">
-    <h1>Weather Site</h1>
-    <div class="input-container" id="input-container">
-      <input id="input-location" class="input-location" type="text" placeholder="Enter location">
-    </div>
     <div class="main-container">
       <svg id="weatherBox" class="weather-box"></svg>
       <div class="text" id="text">
@@ -18,12 +14,12 @@
         <div id="conditions"></div>
         <div id="temperature"></div>
       </div>
+      <input id="input-location" class="input-location" type="text" placeholder="Enter a location">
     </div>
   </body>
   <footer>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script id="google-maps-script"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrt7n0_Iz2PKOJ9cNwszr0JFRW1PDX9vM&libraries=places"></script> -->
     <script data-main="js/index" src="js/require.js"></script>
   </footer>
 </html>
