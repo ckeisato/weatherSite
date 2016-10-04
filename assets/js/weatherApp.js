@@ -1,6 +1,3 @@
-// Precipitation module
-// Gets the number of "preciptation" and type??
-// Get better way of getting location for UI
 // var testData =
 // {
 //   coord: {
@@ -56,20 +53,18 @@ define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, tempe
       this.temperature = temperature;
       this.preciptation = preciptation;
       this.apiKeys = apiKeys;
-
       this.getGooglePlacesScript();
     },
 
     // Make API call to get weather data?????
     getWeatherData: function(lat, lon) {
-      var latLon = 'lat=' + lat + '&lon=' + lon;
-      var apiCall = this.openWeatherApiQuery + latLon + this.apiKeys.openWeather + this.openWeatherApiArgs;
-      var xhr = new XMLHttpRequest();
+      var latLon = 'lat=' + lat + '&lon=' + lon,
+          apiCall = this.openWeatherApiQuery + latLon + this.apiKeys.openWeather + this.openWeatherApiArgs,
+          xhr = new XMLHttpRequest(),
+          that = this;
 
       xhr.open('GET', apiCall);
       xhr.send(null);
-
-      var that = this;
 
       xhr.onreadystatechange = function () {
         var DONE = 4; // readyState 4 means the request is done.
@@ -105,10 +100,10 @@ define(['precipitation', 'temperature', 'apiKeys'], function(preciptation, tempe
     },
 
     getGooglePlacesScript: function() {
-      var googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=" + this.apiKeys.googlePlaces + "&libraries=places";
-      var scriptTag = document.getElementById('google-maps-script');
+      var googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=" + this.apiKeys.googlePlaces + "&libraries=places",
+          scriptTag = document.getElementById('google-maps-script'),
+          that = this;
 
-      var that = this;
       scriptTag.addEventListener("load", function(event) {
         that.initLocation();
       });
