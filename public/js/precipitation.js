@@ -13,7 +13,7 @@ define(['debounce'], function(debounce) {
       var that = this;
 
       if(this.setPrecip(weatherCode)) {
-        this.attachPrecip(100);
+        this.attachPrecip();
         this.precipTimer();
       }
 
@@ -61,8 +61,9 @@ define(['debounce'], function(debounce) {
 
     attachPrecip: function() {
       var that = this;
+
       this.circle = this.svgContainer.selectAll("ellipse")
-        .data(d3.range(that.numPrecip).map(function(datum,interval) {
+        .data(d3.range(that.numPrecip).map(function(datum, interval) {
           return {
             x: interval*20,
             y: 0,
@@ -85,16 +86,13 @@ define(['debounce'], function(debounce) {
     precipTimer: function() {
       this.updateDimensions();
 
-      var that = this, 
-          start = Date.now(),
-          frames = 0;
+      var that = this;
 
-      return d3.timer(function() {
-        // Update the FPS meter.
-        var now = Date.now();
-        var duration = now - start;
-        if (duration >= 1000) frames = 0, start = now;
+      if (this.timer) {
+        this.timer.stop();
+      }
 
+      this.timer = d3.timer(function() {
         // Update the circle positions.
         that.circle
           .attr("cx", function(d) {
@@ -114,9 +112,9 @@ define(['debounce'], function(debounce) {
             }
             else if (d.y < 0) {
                d.y += that.height;
-             }
-             return d.y;
-           });
+            }
+            return d.y;
+          });
       });
     }
   }
