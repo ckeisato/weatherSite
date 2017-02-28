@@ -64,5 +64,6 @@ gulp.task('scripts', function(){
 		.pipe(gulp.dest('./public/js/'));
 });
 
+gulp.task('build', ['pages', 'styles', 'scripts']);
 
 gulp.task('default', ['pages', 'styles', 'scripts', 'serve']);
