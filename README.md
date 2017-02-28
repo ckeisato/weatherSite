@@ -1,6 +1,6 @@
 # weatherSite
 
-http://ckeisato.github.io/weatherSite/public/
+http://ckeisato.github.io/weatherSite/
 
 Todo:
 - Add animations for clouds/thunderstorms
