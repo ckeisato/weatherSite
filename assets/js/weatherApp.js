@@ -46,7 +46,8 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
 
     openWeatherApiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
     openWeatherApiArgs: '&units=metric',
-
+    darkSkyApiUrl: 'https://api.darksky.net/forecast',
+    
     // Get main DOM objects and set weather object
   	init: function(){
       this.weatherBox = d3.select('#weatherBox');
@@ -58,8 +59,8 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
 
     // Make API call to get weather data?????
     getWeatherData: function(lat, lon) {
-      var latLon = 'lat=' + lat + '&lon=' + lon,
-          apiCall = this.openWeatherApiQuery + latLon + this.apiKeys.openWeather + this.openWeatherApiArgs,
+      var latLon = '/' + lat + ',' + lon,
+          apiCall = this.darkSkyApiUrl + '/' + this.apiKeys.darkSky + latLon,
           xhr = new XMLHttpRequest(),
           that = this;
 
