@@ -7,6 +7,10 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var htmlmin = require('gulp-htmlmin');
 
+var http = require('http');
+var httpProxy = require('http-proxy');
+// https://blog.nodejitsu.com/http-proxy-intro/
+
 var node_modules_path = './node_modules';
 var paths = {
   'node': './node_modules',
@@ -20,7 +24,19 @@ gulp.task('clean', function(){
 });
 
 gulp.task('serve', function(){
+
+	httpProxy.createServer(9000, 'localhost').listen(8000);
+
+	http.createServer(function (req, res) {  
+	  res.writeHead(200, { 'Content-Type': 'text/plain' });
+	  res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
+	  res.end();
+	}).listen(9000);
+
 	browserSync.init({
+		ui: {
+    	port: 8000
+		},		
 		server: {
 			baseDir: './public'
 		}
