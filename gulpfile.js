@@ -35,12 +35,11 @@ gulp.task('serve', function(){
 
 
 gulp.task('pages', function(){
-	return gulp.src([paths.assets + '/*'])
+	return gulp.src(paths.assets + '/*.html')
 					.pipe(htmlmin({collapseWhitespace: true}))
 					.pipe(gulp.dest('./public'), { base: '.' });
 });
 
-// compiles styles with foundation base styles
 gulp.task('styles', function(){
 	gulp.src(paths.assets + '/*.scss')
 	.pipe(sass())
@@ -48,22 +47,17 @@ gulp.task('styles', function(){
 	.pipe(gulp.dest('./public'), { base: '.'});
 });
 
-
-gulp.task('data', function(){
-	return gulp.src([
-		paths.assets + '/data/*'
-	]).pipe(gulp.dest('./public/data'));
-})
-
 gulp.task('scripts', function(){
-
-	// index page
 	gulp.src(paths.assets + '/js/*.js')
-	  // .pipe(rename('index.min.js'))
-		// .pipe(uglify())
 		.pipe(gulp.dest('./public/js/'));
 });
 
-gulp.task('build', ['pages', 'styles', 'scripts']);
+gulp.task('scripts-build', function(){
+	gulp.src(paths.assets + '/js/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('./public/js/'));
+});
+
+gulp.task('build', ['pages', 'styles', 'scripts-build']);
 
 gulp.task('default', ['pages', 'styles', 'scripts', 'serve']);
