@@ -6,7 +6,7 @@
 //   },
 //   weather: [
 //     {
-//       id: 320,
+//       id: 700,
 //       main: "Clear",
 //       description: "clear sky",
 //       icon: "01n"
@@ -14,7 +14,7 @@
 //   ],
 //   base: "stations",
 //   main: {
-//     temp: 21.95,
+//     temp: 30,
 //     pressure: 1020.4,
 //     humidity: 68,
 //     temp_min: 21.11,
@@ -45,7 +45,7 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
   return {
 
     openWeatherApiQuery: 'http://api.openweathermap.org/data/2.5/weather?',
-    openWeatherApiArgs: '&units=metric',
+    openWeatherApiArgs: '&units=imperial',
 
     // Get main DOM objects and set weather object
   	init: function(){
@@ -54,6 +54,7 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
       this.preciptation = preciptation;
       this.apiKeys = apiKeys;
       this.getGooglePlacesScript();
+      this.initNewWeather(testData);
     },
 
     // Make API call to get weather data?????
