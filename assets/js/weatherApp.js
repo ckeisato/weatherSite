@@ -1,45 +1,45 @@
-// var testData =
-// {
-//   coord: {
-//     lon: -73.95,
-//     lat: 40.74
-//   },
-//   weather: [
-//     {
-//       id: 700,
-//       main: "Clear",
-//       description: "clear sky",
-//       icon: "01n"
-//     }
-//   ],
-//   base: "stations",
-//   main: {
-//     temp: 30,
-//     pressure: 1020.4,
-//     humidity: 68,
-//     temp_min: 21.11,
-//     temp_max: 22.78
-//   },
-//   wind: {
-//     speed: 4.3,
-//     deg: 189
-//   },
-//   clouds: {
-//     all: 0
-//   },
-//   dt: 1473817006,
-//   sys: {
-//     type: 3,
-//     id: 1452377816,
-//     message: 0.0416,
-//     country: "US",
-//     sunrise: 1473849361,
-//     sunset: 1473894333
-//   },
-//   id: 5125125,
-//   name: "Long Island City",
-//   cod: 200
-// }
+var testData =
+{
+  coord: {
+    lon: -73.95,
+    lat: 40.74
+  },
+  weather: [
+    {
+      id: 700,
+      main: "Clear",
+      description: "clear sky",
+      icon: "01n"
+    }
+  ],
+  base: "stations",
+  main: {
+    temp: 30,
+    pressure: 1020.4,
+    humidity: 68,
+    temp_min: 21.11,
+    temp_max: 22.78
+  },
+  wind: {
+    speed: 4.3,
+    deg: 189
+  },
+  clouds: {
+    all: 0
+  },
+  dt: 1473817006,
+  sys: {
+    type: 3,
+    id: 1452377816,
+    message: 0.0416,
+    country: "US",
+    sunrise: 1473849361,
+    sunset: 1473894333
+  },
+  id: 5125125,
+  name: "Long Island City",
+  cod: 200
+}
 
 define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(preciptation, temperature, apiKeys, debounce) {
   return {
@@ -54,7 +54,6 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
       this.preciptation = preciptation;
       this.apiKeys = apiKeys;
       this.getGooglePlacesScript();
-      this.initNewWeather(testData);
     },
 
     // Make API call to get weather data?????
@@ -84,11 +83,15 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce'], function(precipt
     setText: function(weatherData) {
       var location = weatherData.name,
           conditions = weatherData.weather[0].description,
-          temperature = weatherData.main.temp;
-      
+          temperatureMin = weatherData.main.temp_min;
+          temperatureMax = weatherData.main.temp_max;
+          humidity = weatherData.main.humidity;
+
       document.getElementById("location").innerHTML = location;
       document.getElementById("conditions").innerHTML = conditions;
-      document.getElementById("temperature").innerHTML = temperature + "&deg;";
+      document.getElementById("humidity").innerHTML = "humidity: " + humidity + '%';
+
+      document.getElementById("temperature").innerHTML = temperatureMin + "&deg; - " + temperatureMax + "&deg;";
     },
 
     initNewWeather: function(weatherData) {
