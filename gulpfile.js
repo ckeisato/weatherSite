@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
 var clean = require('gulp-clean');
 var cssmin = require('gulp-cssmin');
@@ -27,7 +26,7 @@ gulp.task('serve', function(){
 	});
 
 	gulp.watch(paths.assets + '/*.html' , ['pages']);
-	gulp.watch(paths.assets + '/*.scss',['styles']);
+	gulp.watch(paths.assets + '/*.css',['styles']);
 	gulp.watch(paths.assets + '/js/*.js',['scripts']);
 
   gulp.watch(['public/**/*']).on('change', browserSync.reload);
@@ -41,8 +40,7 @@ gulp.task('pages', function(){
 });
 
 gulp.task('styles', function(){
-	gulp.src(paths.assets + '/*.scss')
-	.pipe(sass())
+	gulp.src(paths.assets + '/*.css')
 	.pipe(cssmin())
 	.pipe(gulp.dest('./public'), { base: '.'});
 });

@@ -62,7 +62,6 @@ define(['precipitation', 'temperature', 'apiKeys', 'debounce', 'testData'], func
       var googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=" + this.apiKeys.googlePlaces + "&libraries=places",
           scriptTag = document.getElementById('google-maps-script'),
           that = this;
-
       scriptTag.addEventListener("load", function(event) {
         that.initLocation();
       });
