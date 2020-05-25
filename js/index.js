@@ -1,0 +1,1 @@
+require(["weatherApp"],function(e){e.init()});

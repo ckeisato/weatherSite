@@ -1,0 +1,1 @@
+define(["debounce"],function(n){return{initWind:function(n,i){this.parent=i}}});

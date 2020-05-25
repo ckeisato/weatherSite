@@ -1,0 +1,1 @@
+define(function(n,e,t){return{debounce:function(n,e,t){var u;return function(){var i=this,o=arguments,r=function(){u=null,t||n.apply(i,o)},c=t&&!u;clearTimeout(u),u=setTimeout(r,e),c&&n.apply(i,o)}}}});

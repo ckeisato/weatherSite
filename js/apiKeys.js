@@ -1,0 +1,1 @@
+define(function(){return{openWeather:"&appid=4f16dd1b43b18739eed18f43379a5287",darkSky:"69c2f43fae1c45fdfc69cc5f46e361a6",googlePlaces:"AIzaSyCrt7n0_Iz2PKOJ9cNwszr0JFRW1PDX9vM"}});
